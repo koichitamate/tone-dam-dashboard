@@ -23,8 +23,78 @@
   }
 }
 
-.dashboard-note {
+/* タイトル直下の警告文。実データと誤認されないよう目立つ色にする */
+.dashboard-warning {
   font-size: 14px;
+  font-weight: 600;
+  color: #dc2626;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dashboard-warning {
+    color: #f87171;
+  }
+}
+
+/* サマリー行。カード一覧と同じグリッドで、狭い画面では自動で折り返す */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* サマリー1項目分の小さなカード */
+.summary-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 20px;
+}
+
+.summary-label {
+  font-size: 13px;
+  margin: 0 0 4px;
+}
+
+.summary-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-h);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.summary-value-small {
+  font-size: 18px;
+}
+
+.summary-unit {
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+/* 「サンプルデータ表示中」のラベル。本物のデータではないと一目でわかる色にする */
+.badge {
+  justify-self: start;
+  font-size: 13px;
+  font-weight: 600;
+  color: #854d0e;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .badge {
+    color: #fcd34d;
+    background: rgba(252, 211, 77, 0.12);
+    border-color: rgba(252, 211, 77, 0.4);
+  }
 }
 
 /* カードを並べるグリッド。画面幅に応じて自動で折り返す */
@@ -49,6 +119,12 @@
 .dam-name {
   font-size: 18px;
   margin: 0 0 12px;
+}
+
+/* カード内の「貯水率（架空値）」ラベル */
+.dam-rate-label {
+  font-size: 12px;
+  margin: 0 0 4px;
 }
 
 /* 貯水率の数値（カードの主役なので大きく表示） */
