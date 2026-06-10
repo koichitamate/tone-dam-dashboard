@@ -1,184 +1,100 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
+/* ダッシュボード全体 */
+.dashboard {
   flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
+  padding: 24px 32px 40px;
   text-align: left;
 
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
+  @media (max-width: 1024px) {
+    padding: 16px 20px 32px;
+  }
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 32px;
+    letter-spacing: -0.6px;
+    margin: 0 0 8px;
+
     @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
+      font-size: 24px;
     }
   }
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
+.dashboard-note {
+  font-size: 14px;
+}
+
+/* カードを並べるグリッド。画面幅に応じて自動で折り返す */
+.dam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+/* ダム1件分のカード */
+.dam-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: var(--shadow);
   }
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.dam-name {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+/* 貯水率の数値（カードの主役なので大きく表示） */
+.dam-rate {
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--text-h);
+  line-height: 1;
+  margin: 0 0 12px;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
+.dam-rate-unit {
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+/* 横棒バー。外側が枠、内側(.dam-bar-fill)の幅が貯水率を表す */
+.dam-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: var(--code-bg);
+  overflow: hidden;
+}
+
+.dam-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+
+  /* 貯水率に応じた色分け（App.jsxのrateLevel関数と対応） */
+  &.ok {
+    background: #3b82f6; /* 50%以上: 青 */
   }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
+  &.warn {
+    background: #eab308; /* 30〜50%: 黄 */
   }
+  &.low {
+    background: #ef4444; /* 30%未満: 赤 */
+  }
+}
+
+/* 防災判断に使わない旨の注意書き */
+.notice {
+  margin-top: 32px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: var(--code-bg);
+  font-size: 14px;
 }
