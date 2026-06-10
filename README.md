@@ -1,16 +1,71 @@
-# React + Vite
+# 利根川水系9ダム 貯水率ダッシュボード（学習用）
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+利根川水系9ダム（矢木沢・奈良俣・藤原・相俣・薗原・八ッ場・下久保・草木・渡良瀬貯水池）の貯水率をカード表示する、**学習用のReactアプリ**です。
 
-Currently, two official plugins are available:
+> **重要：防災判断には使わないでください。**
+> このアプリの表示はリアルタイムではなく、スクリプト実行時点の取得値です。
+> 河川・ダムの状況確認は、必ず公式情報を参照してください。
+
+## データの取得元
+
+国土交通省 関東地方整備局 利根川ダム統合管理事務所が公開しているリアルタイム河川情報のJSONを利用しています。
+
+- 取得元URL: `https://www.ktr.mlit.go.jp/tonedamu/teikyo/realtime2/json/E007010.json`
+- このJSONは公式ページ内部用のデータであり、公開APIではありません。サイト改修で予告なく構造が変わる可能性があります
+- サーバーに負荷をかけないよう、取得は手動実行のみとし、連続実行はしないでください
+
+## 仕組み（なぜReactから直接取得しないのか）
+
+公式JSONはCORS（ブラウザの安全ルール）により、Reactアプリのブラウザ画面から直接 `fetch` できません。そのため、次の2段構えになっています。
+
+```
+[1] Node.jsスクリプトが公式JSONを取得 → src/data/dams.json に保存
+[2] Reactアプリが dams.json を読み込んで表示
+```
+
+| ファイル | 役割 |
+|---|---|
+| `scripts/fetch-dams.mjs` | 公式JSONを取得し、9ダム分を整形して保存するスクリプト |
+| `src/data/dams.json` | スクリプトが生成する表示用データ（9ダム分） |
+| `src/App.jsx` | dams.json を読み込んでカード表示するReact画面 |
+
+## 使い方
+
+### 1. 最新データを取得する
+
+```
+node scripts/fetch-dams.mjs
+```
+
+公式JSONから9ダムの最新観測値（観測時刻が最大の行）を取り出し、`src/data/dams.json` を更新します。コンソールに取得結果の一覧も表示されます。Node.js 18以降が必要です（標準の `fetch` を使用。追加ライブラリは不要）。
+
+### 2. 画面を確認する
+
+```
+npm run dev
+```
+
+表示されたURL（通常 http://localhost:5173 ）をブラウザで開くと、9ダムのカードとサマリー（平均貯水率・対象ダム数・観測時刻）が表示されます。データを最新にしたいときは、手順1を再実行してください。
+
+## 表示上の注意
+
+- **平均貯水率は「単純平均」です。** 9ダムの貯水率を足して9で割った値であり、公式発表の「9ダム合計貯水率」（貯水量の合計÷容量の合計で算出）とは値が異なります
+- 貯水率バーの色分け（50%以上=青、30〜50%=黄、30%未満=赤）は、このアプリ独自の学習用の目安であり、公式の基準ではありません
+- 観測値には速報値や欠測が含まれることがあります
+
+## 出典
+
+このアプリが表示するダム諸量データの出典は以下のとおりです。
+
+> 出典：国土交通省 関東地方整備局 利根川ダム統合管理事務所「リアルタイム河川情報」
+
+アプリ画面下部にも出典を表示しています。データを二次利用する場合は、政府標準利用規約に従い出典を明記してください。
+
+---
+
+## 開発メモ（React + Vite テンプレート由来の情報）
+
+このプロジェクトは Vite の React テンプレートから作成されています。
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React Compiler は無効のままです。有効化する場合は[こちら](https://react.dev/learn/react-compiler/installation)を参照してください
