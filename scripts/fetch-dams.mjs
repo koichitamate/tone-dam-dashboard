@@ -17,6 +17,15 @@ const SOURCE_NAME = '国土交通省 利根川ダム統合管理事務所'
 const OUTPUT_DIR = 'src/data'
 const OUTPUT_FILE = 'src/data/dams.json'
 
+// dataList の中から observationTime が最大の行（=最新の観測値）を選ぶ。
+// 配列の並び順には依存しない。時刻は "2026/06/10 08:00:00" のような
+// ゼロ埋め形式なので、文字列の大小比較がそのまま新旧の比較になる
+function latestOf(dataList) {
+  return dataList.reduce((latest, row) =>
+    row.observationTime > latest.observationTime ? row : latest
+  )
+}
+
 // カンマ付き文字列（例 "50,416"）を数値に変換する。失敗したらエラー終了
 function toNumber(value, label, damName) {
   const num = Number(String(value).replace(/,/g, ''))
@@ -44,12 +53,12 @@ try {
   const text = await response.text()
   const data = JSON.parse(text.replace(/^﻿/, ''))
 
-  // 4-5. 各ダムの dataList の最後の要素（=最新の観測値）を取り出して表示する
+  // 4-5. 各ダムの dataList から observationTime が最大の行（=最新の観測値）を取り出して表示する
   console.log(`取得件数: ${data.damDataList.length}件（合計行を含む）`)
   console.log('--------------------------------------------------')
 
   for (const dam of data.damDataList) {
-    const latest = dam.dataList[dam.dataList.length - 1]
+    const latest = latestOf(dam.dataList)
     // padEnd は文字数を揃えるための空白埋め（表示を縦に揃えるだけの飾り）
     console.log(
       `${dam.observationName.padEnd(8, '　')} ${latest.observationTime}  貯水率 ${latest.waterRate}%`
@@ -60,7 +69,7 @@ try {
   const dams = data.damDataList
     .filter((dam) => !EXCLUDE_NAMES.includes(dam.observationName))
     .map((dam) => {
-      const latest = dam.dataList[dam.dataList.length - 1]
+      const latest = latestOf(dam.dataList)
       return {
         name: dam.observationName,
         storageRate: toNumber(latest.waterRate, '貯水率', dam.observationName),
