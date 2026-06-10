@@ -76,24 +76,25 @@
   margin-left: 2px;
 }
 
-/* 「サンプルデータ表示中」のラベル。本物のデータではないと一目でわかる色にする */
+/* 「公式データ取得値」のラベル。警告ではなく情報表示なので落ち着いた青系にする */
 .badge {
   justify-self: start;
   font-size: 13px;
   font-weight: 600;
-  color: #854d0e;
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
+  color: #1e40af;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
   border-radius: 999px;
   padding: 6px 14px;
   margin: 0;
+  white-space: nowrap; /* 文言の途中で折り返さない */
 }
 
 @media (prefers-color-scheme: dark) {
   .badge {
-    color: #fcd34d;
-    background: rgba(252, 211, 77, 0.12);
-    border-color: rgba(252, 211, 77, 0.4);
+    color: #93c5fd;
+    background: rgba(147, 197, 253, 0.12);
+    border-color: rgba(147, 197, 253, 0.4);
   }
 }
 
@@ -166,9 +167,15 @@
   }
 }
 
+/* 出典表示 */
+.source {
+  margin-top: 32px;
+  font-size: 13px;
+}
+
 /* 防災判断に使わない旨の注意書き */
 .notice {
-  margin-top: 32px;
+  margin-top: 8px;
   padding: 12px 16px;
   border-radius: 8px;
   background: var(--code-bg);

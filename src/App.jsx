@@ -1,18 +1,7 @@
 import './App.css'
-
-// 9ダムの架空サンプルデータ（貯水率は実際の値ではない）
-// 将来リアルタイムデータに切り替えるときは、この配列を差し替えるだけでよい
-const dams = [
-  { name: '矢木沢ダム', storageRate: 85 },
-  { name: '奈良俣ダム', storageRate: 72 },
-  { name: '藤原ダム', storageRate: 91 },
-  { name: '相俣ダム', storageRate: 64 },
-  { name: '薗原ダム', storageRate: 47 },
-  { name: '八ッ場ダム', storageRate: 78 },
-  { name: '下久保ダム', storageRate: 38 },
-  { name: '草木ダム', storageRate: 55 },
-  { name: '渡良瀬貯水池', storageRate: 26 },
-]
+// scripts/fetch-dams.mjs が生成した9ダム分のデータを読み込む
+// データを最新にするには node scripts/fetch-dams.mjs を再実行する
+import dams from './data/dams.json'
 
 // 貯水率に応じてバーの色クラスを切り替える
 // 50%以上: 青（正常） / 30〜50%: 黄（注意） / 30%未満: 赤（低水準）
@@ -21,9 +10,6 @@ function rateLevel(rate) {
   if (rate >= 30) return 'warn'
   return 'low'
 }
-
-// 仮の更新時刻（リアルタイム取得を始めたら、APIの取得時刻に差し替える）
-const updatedAt = '2026-06-10 09:00'
 
 function App() {
   // 平均貯水率を dams 配列から自動計算する
@@ -36,13 +22,13 @@ function App() {
       <header className="dashboard-header">
         <h1>利根川水系9ダム 貯水率ダッシュボード</h1>
         <p className="dashboard-warning">
-          表示中の数値は実際の貯水率ではありません
+          リアルタイム表示ではありません。スクリプト実行時点の取得値です。
         </p>
       </header>
 
       <section className="summary">
         <div className="summary-item">
-          <p className="summary-label">平均貯水率</p>
+          <p className="summary-label">平均貯水率（単純平均）</p>
           <p className="summary-value">
             {averageRate}
             <span className="summary-unit">%</span>
@@ -56,17 +42,19 @@ function App() {
           </p>
         </div>
         <div className="summary-item">
-          <p className="summary-label">更新時刻（仮）</p>
-          <p className="summary-value summary-value-small">{updatedAt}</p>
+          <p className="summary-label">観測時刻</p>
+          <p className="summary-value summary-value-small">
+            {dams[0].observationTime}
+          </p>
         </div>
-        <p className="badge">架空サンプルデータ表示中</p>
+        <p className="badge">公式データ取得値（手動更新）</p>
       </section>
 
       <section className="dam-grid">
         {dams.map((dam) => (
           <article className="dam-card" key={dam.name}>
             <h2 className="dam-name">{dam.name}</h2>
-            <p className="dam-rate-label">貯水率（架空値）</p>
+            <p className="dam-rate-label">貯水率</p>
             <p className="dam-rate">
               {dam.storageRate}
               <span className="dam-rate-unit">%</span>
@@ -80,6 +68,8 @@ function App() {
           </article>
         ))}
       </section>
+
+      <p className="source">出典：{dams[0].sourceName}</p>
 
       <p className="notice">
         ※ 防災判断には使わず、必ず公式情報を確認してください。
