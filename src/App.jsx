@@ -22,7 +22,7 @@ function App() {
       <header className="dashboard-header">
         <h1>利根川水系9ダム 貯水率ダッシュボード</h1>
         <p className="dashboard-warning">
-          リアルタイム表示ではありません。スクリプト実行時点の取得値です。
+          リアルタイム表示ではありません。約6時間ごとに自動更新される取得値です。
         </p>
       </header>
 
@@ -42,12 +42,12 @@ function App() {
           </p>
         </div>
         <div className="summary-item">
-          <p className="summary-label">観測時刻</p>
+          <p className="summary-label">データ観測時刻</p>
           <p className="summary-value summary-value-small">
             {dams[0].observationTime}
           </p>
         </div>
-        <p className="badge">公式データ取得値（手動更新）</p>
+        <p className="badge">公式データ取得値（6時間毎自動更新）</p>
       </section>
 
       <section className="dam-grid">
