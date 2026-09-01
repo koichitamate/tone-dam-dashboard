@@ -2,64 +2,64 @@
   {
     "name": "矢木沢ダム",
     "storageRate": 98.5,
-    "observationTime": "2026/09/02 01:00:00",
-    "waterCapacity": 113737,
+    "observationTime": "2026/09/02 05:00:00",
+    "waterCapacity": 113727,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   },
   {
     "name": "奈良俣ダム",
     "storageRate": 98.4,
-    "observationTime": "2026/09/02 01:00:00",
-    "waterCapacity": 73241,
+    "observationTime": "2026/09/02 05:00:00",
+    "waterCapacity": 73294,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   },
   {
     "name": "藤原ダム",
     "storageRate": 100,
-    "observationTime": "2026/09/02 01:00:00",
-    "waterCapacity": 13298,
+    "observationTime": "2026/09/02 05:00:00",
+    "waterCapacity": 13137,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   },
   {
     "name": "相俣ダム",
     "storageRate": 94.8,
-    "observationTime": "2026/09/02 01:00:00",
+    "observationTime": "2026/09/02 05:00:00",
     "waterCapacity": 10023,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   },
   {
     "name": "薗原ダム",
     "storageRate": 100,
-    "observationTime": "2026/09/02 01:00:00",
+    "observationTime": "2026/09/02 05:00:00",
     "waterCapacity": 3508,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   },
   {
     "name": "八ッ場ダム",
     "storageRate": 100,
-    "observationTime": "2026/09/02 01:00:00",
-    "waterCapacity": 26686,
+    "observationTime": "2026/09/02 05:00:00",
+    "waterCapacity": 26650,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   },
   {
     "name": "下久保ダム",
     "storageRate": 82.5,
-    "observationTime": "2026/09/02 01:00:00",
+    "observationTime": "2026/09/02 05:00:00",
     "waterCapacity": 70332,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   },
   {
     "name": "草木ダム",
-    "storageRate": 98.9,
-    "observationTime": "2026/09/02 01:00:00",
-    "waterCapacity": 30162,
+    "storageRate": 99,
+    "observationTime": "2026/09/02 05:00:00",
+    "waterCapacity": 30188,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   },
   {
     "name": "渡良瀬貯水池",
-    "storageRate": 84.7,
-    "observationTime": "2026/09/02 01:00:00",
-    "waterCapacity": 10336,
+    "storageRate": 85.1,
+    "observationTime": "2026/09/02 05:00:00",
+    "waterCapacity": 10379,
     "sourceName": "国土交通省 利根川ダム統合管理事務所"
   }
 ]
